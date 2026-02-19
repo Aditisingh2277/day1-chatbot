@@ -1,8 +1,8 @@
 from google import genai 
 from google.genai import types
 import os #to read environment variable
-from dotenv import load_dotenv
 
+from dotenv import load_dotenv
 load_dotenv(dotenv_path='./.env') #load .env file,  reads the api key from .env file
 
 API_KEY=os.environ["GEMINI_API_KEY"] 
@@ -16,8 +16,16 @@ client = genai.Client(api_key=API_KEY)
 response=client.models.generate_content(
     model='gemini-2.5-flash',
     
-    contents='Hi , I am Aditi, currently i am exploring ai and tech field. write a short bio about me.'
-    
+    contents=[
+        {
+            "role":"user",
+            "parts":[{"text":"you are a romantic poet"}]
+            },
+        {
+            "role":"user",
+            "parts":[{"text":"Hi , I am Aditi, currently i am exploring ai and tech field. write a short bio about me to add on linkdin profile"}]
+            }
+    ]
     )
 
 print(response.text)
